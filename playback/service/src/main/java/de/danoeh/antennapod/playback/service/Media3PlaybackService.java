@@ -27,7 +27,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import de.danoeh.antennapod.event.MessageEvent;
 import de.danoeh.antennapod.event.FeedItemEvent;
+import de.danoeh.antennapod.event.FeedListUpdateEvent;
 import de.danoeh.antennapod.event.PlayerErrorEvent;
+import de.danoeh.antennapod.event.QueueEvent;
 import de.danoeh.antennapod.event.StreamingConfirmationEvent;
 import de.danoeh.antennapod.event.settings.VolumeAdaptionChangedEvent;
 import de.danoeh.antennapod.event.PlayerStatusEvent;
@@ -849,9 +851,11 @@ public class Media3PlaybackService extends MediaLibraryService {
         }
     }
 
+    @UnstableApi
     @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     public void feedItemsUpdated(FeedItemEvent event) {
+        notifyBrowsableContentChanged();
         if (currentPlayable == null || !currentPlayable.localFileAvailable()) {
             return;
         }
@@ -863,6 +867,27 @@ public class Media3PlaybackService extends MediaLibraryService {
             currentPlayable = null;
             PlaybackPreferences.writeNoMediaPlaying();
             EventBus.getDefault().post(new PlayerStatusEvent());
+        }
+    }
+
+    @UnstableApi
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    @SuppressWarnings("unused")
+    public void queueUpdated(QueueEvent event) {
+        notifyBrowsableContentChanged();
+    }
+
+    @UnstableApi
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    @SuppressWarnings("unused")
+    public void feedListUpdated(FeedListUpdateEvent event) {
+        notifyBrowsableContentChanged();
+    }
+
+    @UnstableApi
+    private void notifyBrowsableContentChanged() {
+        if (mediaSession != null) {
+            sessionCallback.notifyBrowsableContentChanged(mediaSession);
         }
     }
 

@@ -144,6 +144,16 @@ public class MediaLibrarySessionCallback implements MediaLibraryService.MediaLib
         session.setMediaButtonPreferences(buildCustomLayout());
     }
 
+    /**
+     * Tells subscribed browsers such as Android Auto to load the browsable content again.
+     */
+    @UnstableApi
+    public void notifyBrowsableContentChanged(MediaLibraryService.MediaLibrarySession session) {
+        for (String mediaId : BROWSABLE_MEDIA_IDS) {
+            session.notifyChildrenChanged(mediaId, Integer.MAX_VALUE, null);
+        }
+    }
+
     @UnstableApi
     private ImmutableList<CommandButton> buildCustomLayout() {
         ImmutableList.Builder<CommandButton> buttons = ImmutableList.builder();
