@@ -42,6 +42,8 @@ public class ItemSortDialog extends BottomSheetDialogFragment {
         viewBinding.gridLayout.removeAllViews();
         onAddItem(R.string.episode_title, SortOrder.EPISODE_TITLE_A_Z, SortOrder.EPISODE_TITLE_Z_A, true);
         onAddItem(R.string.feed_title, SortOrder.FEED_TITLE_A_Z, SortOrder.FEED_TITLE_Z_A, true);
+        onAddItem(R.string.subscription_order, SortOrder.SUBSCRIPTION_ORDER,
+                SortOrder.SUBSCRIPTION_ORDER_REVERSE, true);
         onAddItem(R.string.duration, SortOrder.DURATION_SHORT_LONG, SortOrder.DURATION_LONG_SHORT, true);
         onAddItem(R.string.date, SortOrder.DATE_OLD_NEW, SortOrder.DATE_NEW_OLD, false);
         onAddItem(R.string.size, SortOrder.SIZE_SMALL_LARGE, SortOrder.SIZE_LARGE_SMALL, false);

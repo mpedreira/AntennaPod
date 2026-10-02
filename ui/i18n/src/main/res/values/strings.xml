@@ -95,6 +95,8 @@
     <string name="drawer_feed_order_alphabetical">Sort alphabetically</string>
     <string name="drawer_feed_order_last_update">Sort by publication date</string>
     <string name="drawer_feed_order_most_played">Sort by number of played episodes</string>
+    <string name="drawer_feed_order_custom">Custom order</string>
+    <string name="reorder_subscriptions">Reorder subscriptions</string>
     <string name="drawer_feed_counter_inbox">Number of episodes in the inbox</string>
     <string name="drawer_feed_counter_unplayed">Number of unplayed episodes</string>
     <string name="drawer_feed_counter_downloaded">Number of downloaded episodes</string>
@@ -412,6 +414,7 @@
     <string name="episode_title">Episode title</string>
     <string name="feed">Podcast</string>
     <string name="feed_title">Podcast title</string>
+    <string name="subscription_order">Subscription order</string>
     <string name="random">Random</string>
     <string name="smart_shuffle">Smart shuffle</string>
     <string name="size">Size</string>

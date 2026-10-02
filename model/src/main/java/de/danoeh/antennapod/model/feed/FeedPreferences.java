@@ -123,6 +123,7 @@ public class FeedPreferences implements Serializable {
     private SkipSilence feedSkipSilence;
     private boolean showEpisodeNotification;
     private boolean removeUnlistedEpisodes;
+    private int priority;
     private final Set<String> tags = new HashSet<>();
 
     public FeedPreferences(long feedID, AutoDownloadSetting autoDownload, AutoDeleteAction autoDeleteAction,
@@ -130,7 +131,7 @@ public class FeedPreferences implements Serializable {
                            String username, String password) {
         this(feedID, autoDownload, true, autoDeleteAction, volumeAdaptionSetting, username, password,
                 new FeedFilter(), SPEED_USE_GLOBAL, 0, 0, SkipSilence.GLOBAL,
-                false, newEpisodesAction, new HashSet<>(), false);
+                false, newEpisodesAction, new HashSet<>(), false, 0);
     }
 
     public FeedPreferences(long feedID, AutoDownloadSetting autoDownload, boolean keepUpdated,
@@ -138,7 +139,7 @@ public class FeedPreferences implements Serializable {
                             String username, String password, @NonNull FeedFilter filter,
                             float feedPlaybackSpeed, int feedSkipIntro, int feedSkipEnding, SkipSilence feedSkipSilence,
                             boolean showEpisodeNotification, NewEpisodesAction newEpisodesAction,
-                            Set<String> tags, boolean removeUnlistedEpisodes) {
+                            Set<String> tags, boolean removeUnlistedEpisodes, int priority) {
         this.feedID = feedID;
         this.autoDownload = autoDownload;
         this.keepUpdated = keepUpdated;
@@ -155,6 +156,7 @@ public class FeedPreferences implements Serializable {
         this.newEpisodesAction = newEpisodesAction;
         this.tags.addAll(tags);
         this.removeUnlistedEpisodes = removeUnlistedEpisodes;
+        this.priority = priority;
     }
 
     /**
@@ -189,6 +191,17 @@ public class FeedPreferences implements Serializable {
 
     public void setRemoveUnlistedEpisodes(boolean removeUnlistedEpisodes) {
         this.removeUnlistedEpisodes = removeUnlistedEpisodes;
+    }
+
+    /**
+     * @return the position of this feed in the user-defined custom subscription order.
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     /**

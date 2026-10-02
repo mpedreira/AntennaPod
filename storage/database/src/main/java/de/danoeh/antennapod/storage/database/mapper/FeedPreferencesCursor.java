@@ -34,6 +34,7 @@ public class FeedPreferencesCursor extends CursorWrapper {
     private final int indexNewEpisodesAction;
     private final int indexTags;
     private final int indexRemoveUnlistedEpisodes;
+    private final int indexPriority;
 
     public FeedPreferencesCursor(Cursor cursor) {
         super(cursor);
@@ -55,6 +56,7 @@ public class FeedPreferencesCursor extends CursorWrapper {
         indexNewEpisodesAction = cursor.getColumnIndexOrThrow(PodDBAdapter.KEY_NEW_EPISODES_ACTION);
         indexTags = cursor.getColumnIndexOrThrow(PodDBAdapter.KEY_FEED_TAGS);
         indexRemoveUnlistedEpisodes = cursor.getColumnIndexOrThrow(PodDBAdapter.KEY_REMOVE_UNLISTED_EPISODES);
+        indexPriority = cursor.getColumnIndexOrThrow(PodDBAdapter.KEY_PRIORITY);
     }
 
     /**
@@ -83,6 +85,7 @@ public class FeedPreferencesCursor extends CursorWrapper {
                 getInt(indexEpisodeNotification) > 0,
                 FeedPreferences.NewEpisodesAction.fromCode(getInt(indexNewEpisodesAction)),
                 new HashSet<>(Arrays.asList(tagsString.split(FeedPreferences.TAG_SEPARATOR))),
-                getInt(indexRemoveUnlistedEpisodes) > 0);
+                getInt(indexRemoveUnlistedEpisodes) > 0,
+                getInt(indexPriority));
     }
 }

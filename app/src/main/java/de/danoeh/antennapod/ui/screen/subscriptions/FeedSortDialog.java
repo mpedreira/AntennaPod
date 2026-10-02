@@ -28,12 +28,16 @@ public class FeedSortDialog {
 
         String[] items = context.getResources().getStringArray(R.array.nav_drawer_feed_order_options);
         dialog.setSingleChoiceItems(items, selectedIndex, (d, which) -> {
+            FeedOrder order = FeedOrder.fromOrdinal(Integer.parseInt(entryValues.get(which)));
             if (selectedIndex != which) {
-                UserPreferences.setFeedOrder(FeedOrder.fromOrdinal(Integer.parseInt(entryValues.get(which))));
+                UserPreferences.setFeedOrder(order);
                 //Update subscriptions
                 EventBus.getDefault().post(new FeedItemEvent(Collections.emptyList(), true));
             }
             d.dismiss();
+            if (order == FeedOrder.CUSTOM) {
+                new SubscriptionOrderDialog(context).show();
+            }
         });
         dialog.show();
     }
