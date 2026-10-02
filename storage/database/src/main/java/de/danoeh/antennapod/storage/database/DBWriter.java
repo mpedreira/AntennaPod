@@ -819,6 +819,20 @@ public class DBWriter {
         });
     }
 
+    /**
+     * Sets the custom subscription order used to sort the queue. The order of the feed IDs in
+     * the list becomes their new priority.
+     */
+    public static Future<?> setFeedOrder(final List<Long> feedIds) {
+        return runOnDbThread(() -> {
+            PodDBAdapter adapter = PodDBAdapter.getInstance();
+            adapter.open();
+            adapter.setFeedPriorities(feedIds);
+            adapter.close();
+            EventBus.getDefault().post(new FeedListUpdateEvent(feedIds.isEmpty() ? 0 : feedIds.get(0)));
+        });
+    }
+
     private static boolean itemListContains(List<FeedItem> items, long itemId) {
         return indexInItemList(items, itemId) >= 0;
     }

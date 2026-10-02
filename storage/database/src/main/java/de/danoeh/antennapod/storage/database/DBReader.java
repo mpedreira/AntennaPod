@@ -731,6 +731,16 @@ public final class DBReader {
                     }
                 };
                 break;
+            case CUSTOM:
+                comparator = (lhs, rhs) -> {
+                    int p1 = lhs.getPreferences() != null ? lhs.getPreferences().getPriority() : 0;
+                    int p2 = rhs.getPreferences() != null ? rhs.getPreferences().getPriority() : 0;
+                    if (p1 != p2) {
+                        return Integer.compare(p1, p2);
+                    }
+                    return lhs.getTitle().compareToIgnoreCase(rhs.getTitle());
+                };
+                break;
             default:
                 final Map<Long, Long> recentPubDates = adapter.getMostRecentItemDates();
                 comparator = (lhs, rhs) -> {

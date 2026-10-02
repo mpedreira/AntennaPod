@@ -87,6 +87,12 @@ public class FeedItemPermutors {
                 comparator = (f1, f2) -> f2.getMedia().getLastPlayedTimeHistory()
                         .compareTo(f1.getMedia().getLastPlayedTimeHistory());
                 break;
+            case SUBSCRIPTION_ORDER:
+                comparator = (f1, f2) -> Integer.compare(subscriptionPriority(f1), subscriptionPriority(f2));
+                break;
+            case SUBSCRIPTION_ORDER_REVERSE:
+                comparator = (f1, f2) -> Integer.compare(subscriptionPriority(f2), subscriptionPriority(f1));
+                break;
             default:
                 throw new IllegalArgumentException("Permutor not implemented");
         }
@@ -128,6 +134,11 @@ public class FeedItemPermutors {
     private static String feedTitle(@Nullable FeedItem item) {
         return (item != null && item.getFeed() != null && item.getFeed().getTitle() != null)
                 ? item.getFeed().getTitle().toLowerCase(Locale.getDefault()) : "";
+    }
+
+    private static int subscriptionPriority(@Nullable FeedItem item) {
+        return (item != null && item.getFeed() != null && item.getFeed().getPreferences() != null)
+                ? item.getFeed().getPreferences().getPriority() : 0;
     }
 
     /**
